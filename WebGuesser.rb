@@ -23,8 +23,21 @@ def check_guess(guess)
 		end
 	end
 end
+
+def style(message)
+	case message
+		when "Way too high!!!" then "background: red"
+		when "Way too low!!!" then "background: red"
+		when "Too high!" then "background: #FF4D4D"
+		when "Too low!" then "background: #FF4D4D"
+		when "You got it right! The secret number is #{SECRET_NUMBER}" then "background: green"
+		else
+	end
+end
+
 get "/" do
 	guess = params["guess"].to_i
   message = check_guess(guess)
-  erb :index, :locals => {:message => message}
+  style = style(message)
+  erb :index, :locals => {:message => message, :style => style}
 end
