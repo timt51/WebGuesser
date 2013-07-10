@@ -4,23 +4,9 @@
     <form>
   		<input type='text' name='guess' />
   		<input type='submit' value='Guess!' />
-	</form>
+		</form>
 		<p>
-			<%	if params["guess"].to_i > secret_number
-					if params["guess"].to_i - 5 > secret_number %>
-						Way too high!!!
-			<%		else										%>
-						Too high!
-			<%		end
-				elsif params["guess"].to_i < secret_number
-					if params["guess"].to_i + 5 < secret_number	%>
-						Way too low!!!
-			<%		else										%>
-						Too low!
-			<%		end
-				else											%>
-					You got it right! The secret number is <%= "#{secret_number}" %>
-			<%	end												%>
+			<%= message %>
 		</p>
   </body>
 </html>
