@@ -54,20 +54,3 @@ get "/" do
 	end
   erb :index, :locals => {:message => message, :style => style, :guesses_available => guesses_available + 1}
 end
-
-# Guess Limiting
-
-# Can you make it so they only get five guesses before a new number is generated? Some tips:
-
-#     Create a class variable with @@ that keeps track of how many guesses they have remaining
-#     When subtract one from that each guess
-#     If the guesses reach zero, then…
-#         Generate a new number
-#         Set the number of guesses back to five
-#         Show them a message that they’ve lost and a new number has been generated
-#     If they guess correctly, then…
-#         Generate a new number
-#         Set the number of guesses back to five
-#         Show the message that they’ve guessed correctly
-
-# When it works correctly, commit your files to Git!
