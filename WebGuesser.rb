@@ -1,6 +1,8 @@
 require "sinatra"
 require "sinatra/reloader"
 
+guesses_available = 5
+
 SECRET_NUMBER = rand(99) + 1
 
 def check_guess(guess)
@@ -8,18 +10,18 @@ def check_guess(guess)
 	else	
 		if guess > SECRET_NUMBER
 			if guess - 5 > SECRET_NUMBER
-				"Way too high!!!"
+				return "Way too high!!!"
 			else										
-				"Too high!"
+				return "Too high!"
 			end
 		elsif guess < SECRET_NUMBER
 			if guess + 5 < SECRET_NUMBER	
-				"Way too low!!!"
+				return "Way too low!!!"
 			else										
-				"Too low!"
+				return "Too low!"
 			end
 		else											
-			"You got it right! The secret number is #{SECRET_NUMBER}" 
+			return "You got it right! The secret number is #{SECRET_NUMBER}" 
 		end
 	end
 end
@@ -36,8 +38,36 @@ def style(message)
 end
 
 get "/" do
-	guess = params["guess"].to_i
-  message = check_guess(guess)
-  style = style(message)
-  erb :index, :locals => {:message => message, :style => style}
+	if params["guess"] == SECRET_NUMBER
+		SECRET_NUMBER = rand(99) + 1
+		guesses_available = 5
+		message = "You got it right! The secret number is #{SECRET_NUMBER}"
+	elsif guesses_available > 1
+		guess = params["guess"].to_i
+	  message = check_guess(guess)
+	  style = style(message)
+	  guesses_available = guesses_available - 1
+	else
+		SECRET_NUMBER = rand(99) + 1
+		guesses_available = 5
+		message = "You lost! A new number has been generated."
+	end
+  erb :index, :locals => {:message => message, :style => style, :guesses_available => guesses_available + 1}
 end
+
+# Guess Limiting
+
+# Can you make it so they only get five guesses before a new number is generated? Some tips:
+
+#     Create a class variable with @@ that keeps track of how many guesses they have remaining
+#     When subtract one from that each guess
+#     If the guesses reach zero, then…
+#         Generate a new number
+#         Set the number of guesses back to five
+#         Show them a message that they’ve lost and a new number has been generated
+#     If they guess correctly, then…
+#         Generate a new number
+#         Set the number of guesses back to five
+#         Show the message that they’ve guessed correctly
+
+# When it works correctly, commit your files to Git!
