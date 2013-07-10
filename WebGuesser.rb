@@ -43,7 +43,7 @@ get "/" do
 		guesses_available = 5
 		message = "You got it right! The secret number is #{SECRET_NUMBER}"
 	elsif guesses_available > 0
-		guess = params["guess"].to_i-
+		guess = params["guess"].to_i
 	  message = check_guess(guess)
 	  style = style(message)
 	  guesses_available = guesses_available - 1
